@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import io.reactivex.Observable
+import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Consumer
 
 /**
  * Description:
@@ -15,10 +17,15 @@ import io.reactivex.Observable
  */
 class TwitterResultReceiver : BroadcastReceiver() {
 
-    // 分享结果观察者
-    var twitterResultObservable: Observable<String>? = null
+    companion object {
+        var disposable: Disposable? = null
+        var resultObserver: Consumer<String>? = null
+    }
 
     override fun onReceive(context: Context, intent: Intent) {
-        twitterResultObservable = Observable.just(intent.action)
+        val observer = resultObserver ?: return
+        disposable = Observable.just(intent.action)
+            .subscribe(observer)
     }
+
 }

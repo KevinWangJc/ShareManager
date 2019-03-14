@@ -11,6 +11,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        // 传递混淆规则
+        consumerProguardFiles 'share-manager-proguard-rules.pro'
     }
 
     buildTypes {
@@ -24,11 +26,12 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    compileOnly 'com.android.support:design:28.0.0'
-    compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     testCompileOnly 'junit:junit:4.12'
     androidTestCompileOnly 'com.android.support.test:runner:1.0.2'
     androidTestCompileOnly 'com.android.support.test.espresso:espresso-core:3.0.2'
+    compileOnly 'com.android.support:design:28.0.0'
+    compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    compileOnly 'io.reactivex.rxjava2:rxjava:2.2.7'
     api('com.facebook.android:facebook-android-sdk:4.39.0') {
         exclude group: "com.android.support"
     }
@@ -38,9 +41,4 @@ dependencies {
     api('com.google.android.gms:play-services-auth:16.0.1') {
         exclude group: "com.android.support"
     }
-    compileOnly 'io.reactivex.rxjava2:rxjava:2.2.7'
-}
-
-repositories {
-    mavenCentral()
 }

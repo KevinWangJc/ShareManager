@@ -1,13 +1,14 @@
-package com.example.share
+package com.example.share.share
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.widget.Toast
 import com.base.library.share.base.BaseShareActivity
 import com.base.library.share.common.constants.ShareConstants
+import com.example.share.R
 import kotlinx.android.synthetic.main.activity_share.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -20,7 +21,6 @@ import java.util.*
  * Company: Mobile CPX
  * Date:    2019/3/14
  */
-@SuppressLint("SetTextI18n")
 class ShareActivity : BaseShareActivity() {
 
     private var localVideoUri: Uri = Uri.EMPTY
@@ -191,7 +191,9 @@ class ShareActivity : BaseShareActivity() {
 
     private fun checkLocalVideoUri(): Boolean {
         if (localVideoUri == Uri.EMPTY) {
-            tv_local_video_uri.text = "please click \"Choose Local Video\" button to select a local video first"
+            val noVideoHint = "please click \"Choose Local Video\" button to select a local video first"
+            tv_local_video_uri.text = noVideoHint
+            Toast.makeText(this,noVideoHint,Toast.LENGTH_SHORT).show()
             return false
         }
         return true
@@ -199,7 +201,9 @@ class ShareActivity : BaseShareActivity() {
 
     private fun checkLocalImageUri(): Boolean {
         if (localImageUri == Uri.EMPTY) {
-            tv_local_image_uri.text = "please click \"Choose Local Image\" button to select a local image first"
+            val noImageHint = "please click \"Choose Local Image\" button to select a local image first"
+            tv_local_image_uri.text = noImageHint
+            Toast.makeText(this,noImageHint,Toast.LENGTH_SHORT).show()
             return false
         }
         return true
@@ -218,11 +222,15 @@ class ShareActivity : BaseShareActivity() {
     }
 
     override fun onShareSuccess(type: String) {
-        tv_share_status.append("${SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date())}: $type 分享成功\n\n")
+        val loginResult = "${SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date())}: $type 分享成功\n\n"
+        tv_share_status.append(loginResult)
+        Toast.makeText(this,loginResult,Toast.LENGTH_SHORT).show()
     }
 
     override fun onShareFail(type: String, cause: String) {
-        tv_share_status.append("${SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date())}: $type 分享失败\ncause:$cause\n\n")
+        val loginResult = "${SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date())}: $type 分享失败\ncause:$cause\n\n"
+        tv_share_status.append(loginResult)
+        Toast.makeText(this,loginResult,Toast.LENGTH_SHORT).show()
     }
 
 }

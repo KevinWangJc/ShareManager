@@ -1,10 +1,11 @@
-package com.example.share
+package com.example.share.login
 
 import android.os.Bundle
 import android.util.Log
 import com.base.library.login.base.BaseLoginActivity
 import com.base.library.login.common.bean.LoginAuth
 import com.base.library.login.common.constants.LoginConstants
+import com.example.share.R
 import kotlinx.android.synthetic.main.activity_login.*
 
 /**

@@ -11,6 +11,7 @@ import com.twitter.sdk.android.core.TwitterSession
 import com.twitter.sdk.android.tweetcomposer.ComposerActivity
 import com.twitter.sdk.android.tweetcomposer.TweetUploadService
 import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Consumer
 
 /**
  * Description:
@@ -49,14 +50,7 @@ class TwitterShareManager(private val activity: Activity, private val onShareLis
             is Uri -> image
             else -> Uri.EMPTY
         }
-        activity.startActivity(
-            ComposerActivity.Builder(activity)
-                .image(imageUri)
-                .text(text)
-                .session(getSession())
-                .createIntent()
-        )
-        resultDisposable = TwitterResultReceiver().twitterResultObservable?.subscribe {
+        TwitterResultReceiver.resultObserver = Consumer {
             ShareUtils.clearShareTempPictures(activity)
             when (it) {
                 TweetUploadService.UPLOAD_SUCCESS -> onShareListener.onShareSuccess(TWITTER)
@@ -67,6 +61,13 @@ class TwitterShareManager(private val activity: Activity, private val onShareLis
                 )
             }
         }
+        activity.startActivity(
+            ComposerActivity.Builder(activity)
+                .image(imageUri)
+                .text(text)
+                .session(getSession())
+                .createIntent()
+        )
     }
 
     private fun getSession(): TwitterSession? {
@@ -75,6 +76,8 @@ class TwitterShareManager(private val activity: Activity, private val onShareLis
 
 
     fun release() {
-        resultDisposable?.dispose()
+        TwitterResultReceiver.disposable?.dispose()
+        TwitterResultReceiver.resultObserver = null
+        TwitterResultReceiver.disposable = null
     }
 }

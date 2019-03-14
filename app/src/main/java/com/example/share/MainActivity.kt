@@ -3,6 +3,8 @@ package com.example.share
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.example.share.login.LoginActivity
+import com.example.share.share.ShareActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**

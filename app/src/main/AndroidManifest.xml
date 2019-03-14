@@ -20,8 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity"/>
-        <activity android:name=".ShareActivity"/>
+        <activity android:name=".login.LoginActivity"/>
+        <activity android:name=".share.ShareActivity"/>
         <!-- facebook Login -->
         <meta-data
                 android:name="com.facebook.sdk.ApplicationId"

@@ -86,13 +86,14 @@ class FacebookShareManager(private val activity: Activity, private val onShareLi
     fun shareMedia(imageList: List<Any?> = ArrayList(), videoUriList: List<Uri> = ArrayList(), tag: String = "") {
         val shareContentBuilder = ShareMediaContent.Builder()
         for (image in imageList) {
+            image ?: continue
             shareContentBuilder.addMedium(buildSharePhoto(image))
         }
         for (video in videoUriList) {
             shareContentBuilder.addMedium(buildShareVideo(video))
         }
         if (imageList.isEmpty() && videoUriList.isEmpty()) {
-            onShareListener.onShareFail(ShareConstants.FACEBOOK,"share media fail, because images or videos is empty")
+            onShareListener.onShareFail(ShareConstants.FACEBOOK, "share media fail, because images or videos is empty")
             return
         }
         shareContentBuilder.setShareHashtag(
