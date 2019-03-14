@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".MainActivity">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <Button
+                android:id="@+id/btn_share_text_by_facebook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Share Text by facebook"
+                android:textAllCaps="false"/>
+
+        <Button
+                android:id="@+id/btn_share_link_by_facebook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Share Link by facebook"
+                android:textAllCaps="false"/>
+
+        <Button
+                android:id="@+id/btn_share_bitmap_by_facebook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Share Bitmap by facebook"
+                android:textAllCaps="false"/>
+
+        <Button
+                android:id="@+id/btn_choose_local_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Choose Local Image"
+                android:textAllCaps="false"/>
+
+        <TextView
+                android:id="@+id/tv_local_image_uri"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="Local image uri: "/>
+
+        <Button
+                android:id="@+id/btn_share_local_image_by_facebook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Share Local Image by facebook"
+                android:textAllCaps="false"/>
+
+
+        <Button
+                android:id="@+id/btn_choose_local_video"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Choose Local Video"
+                android:textAllCaps="false"/>
+
+        <TextView
+                android:id="@+id/tv_local_video_uri"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="Local video uri: "/>
+
+        <Button
+                android:id="@+id/btn_share_video_by_facebook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Share Video by facebook"
+                android:textAllCaps="false"/>
+
+        <Button
+                android:id="@+id/btn_share_media_by_facebook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Share Media by facebook"
+                android:textAllCaps="false"/>
+
+        <Button
+                android:id="@+id/btn_share_text_by_twitter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Share Text by twitter"
+                android:textAllCaps="false"/>
+
+        <Button
+                android:id="@+id/btn_share_bitmap_by_twitter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Share Bitmap by twitter"
+                android:textAllCaps="false"/>
+
+        <Button
+                android:id="@+id/btn_share_local_image_by_twitter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Share Local Image by twitter"
+                android:textAllCaps="false"/>
+
+        <Button
+                android:id="@+id/btn_send_text_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Send Text Email"
+                android:textAllCaps="false"/>
+
+        <Button
+                android:id="@+id/btn_send_image_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Send Image Email"
+                android:textAllCaps="false"/>
+
+        <Button
+                android:id="@+id/btn_send_video_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Send Video Email"
+                android:textAllCaps="false"/>
+
+        <Button
+                android:id="@+id/btn_send_media_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Send Media Email"
+                android:textAllCaps="false"/>
+
+        <Button
+                android:id="@+id/btn_send_sms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Send SMS"
+                android:textAllCaps="false"/>
+
+        <TextView
+                android:id="@+id/tv_share_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                tools:text="分享成功\ntype=xxx\ntoken=xxx\n"/>
+    </LinearLayout>
+</ScrollView>

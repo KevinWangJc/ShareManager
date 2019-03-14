@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">ShareDemo</string>
+    <string name="facebook_app_id" translatable="false">2320668714924955</string>
+    <string name="twitter_consumer_key">Rcgjw1rCAprIhQegO5NrMy8pK</string>
+    <string name="twitter_consumer_secret">GIiNOlD31CaAEuiuGtXypFj3ti3kn9149pYLb3LBnfA5OfYybe</string>
+</resources>
