@@ -3,11 +3,9 @@ package com.base.library.share.email
 import android.app.Activity
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
-import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
-import android.support.v4.app.Fragment
 import com.base.library.share.common.constants.ShareConstants.Companion.EMAIL
 import com.base.library.share.common.constants.ShareConstants.Companion.REQUEST_CODE_SEND_EMAIL
 import com.base.library.share.common.listener.OnShareListener
@@ -51,19 +49,17 @@ class EmailShareManager(private val activity: Activity, private val onShareListe
         val uriList = ArrayList<Uri>()
         for (image in imageList) {
             val imageUri = when (image) {
-                is Bitmap -> ShareUtils.bitmap2Uri(
-                    when (activity) {
-                        is Fragment -> activity.context
-                        else -> activity as Context
-                    }, image
-                )
+                is Bitmap -> ShareUtils.bitmap2Uri(activity, image)
                 is Uri -> image
                 else -> Uri.EMPTY
             }
             uriList.add(imageUri)
         }
         uriList.addAll(videoList)
-        email.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uriList)
+        val uris = ArrayList(uriList.filter {
+            it != Uri.EMPTY
+        })
+        email.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris)
         email.putExtra(Intent.EXTRA_TEXT, emailBody)
         email.putExtra(Intent.EXTRA_SUBJECT, emailSubject)
         activity.startActivityForResult(

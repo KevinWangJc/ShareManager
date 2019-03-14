@@ -91,9 +91,9 @@ class FacebookShareManager(private val activity: Activity, private val onShareLi
         for (video in videoUriList) {
             shareContentBuilder.addMedium(buildShareVideo(video))
         }
-        /**必须添加一个Medium*/
         if (imageList.isEmpty() && videoUriList.isEmpty()) {
-            shareContentBuilder.addMedium(buildShareVideo(Uri.EMPTY))
+            onShareListener.onShareFail(ShareConstants.FACEBOOK,"share media fail, because images or videos is empty")
+            return
         }
         shareContentBuilder.setShareHashtag(
             ShareHashtag.Builder()
@@ -133,7 +133,7 @@ class FacebookShareManager(private val activity: Activity, private val onShareLi
 
     override fun onError(error: FacebookException?) {
         ShareUtils.clearShareTempPictures(activity)
-        onShareListener.onShareFail(ShareConstants.FACEBOOK, "Facebook share fail:$error")
+        onShareListener.onShareFail(ShareConstants.FACEBOOK, "Facebook share fail, need Login by Facebook first:$error")
     }
 
     fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

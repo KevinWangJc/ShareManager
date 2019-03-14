@@ -3,8 +3,10 @@ package com.base.library.share.common.util
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
+import android.support.v4.content.FileProvider
 import java.io.File
 import java.io.FileOutputStream
+
 
 /**
  * Description:
@@ -26,7 +28,12 @@ object ShareUtils {
         val outputStream = FileOutputStream(file)
         image.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
         outputStream.close()
-        return Uri.fromFile(file)
+        val photoUri = FileProvider.getUriForFile(
+            context,
+            context.packageName + ".provider",
+            file
+        )
+        return photoUri
     }
 
     /**

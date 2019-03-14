@@ -1,12 +1,13 @@
 package com.base.library.share.twitter
 
-import android.content.Context
+import android.app.Activity
 import android.graphics.Bitmap
 import android.net.Uri
 import com.base.library.share.common.constants.ShareConstants.Companion.TWITTER
 import com.base.library.share.common.listener.OnShareListener
 import com.base.library.share.common.util.ShareUtils
 import com.twitter.sdk.android.core.TwitterCore
+import com.twitter.sdk.android.core.TwitterSession
 import com.twitter.sdk.android.tweetcomposer.ComposerActivity
 import com.twitter.sdk.android.tweetcomposer.TweetUploadService
 import io.reactivex.disposables.Disposable
@@ -19,7 +20,7 @@ import io.reactivex.disposables.Disposable
  * Company: Mobile CPX
  * Date:    2018/12/4
  */
-class TwitterShareManager(private val context: Context, private val onShareListener: OnShareListener) {
+class TwitterShareManager(private val activity: Activity, private val onShareListener: OnShareListener) {
 
     // 接收分享结果
     private var resultDisposable: Disposable? = null
@@ -39,21 +40,24 @@ class TwitterShareManager(private val context: Context, private val onShareListe
      * @param text 文字内容
      */
     fun shareImage(image: Any? = Uri.EMPTY, text: String = "") {
-        if (!checkSession()) return
+        getSession() ?: let {
+            onShareListener.onShareFail(TWITTER, "Twitter share fail, need Login by Twitter first")
+            return
+        }
         val imageUri = when (image) {
-            is Bitmap -> ShareUtils.bitmap2Uri(context, image)
+            is Bitmap -> ShareUtils.bitmap2Uri(activity, image)
             is Uri -> image
             else -> Uri.EMPTY
         }
-        context.startActivity(
-            ComposerActivity.Builder(context)
+        activity.startActivity(
+            ComposerActivity.Builder(activity)
                 .image(imageUri)
                 .text(text)
-                .session(TwitterCore.getInstance().sessionManager.activeSession)
+                .session(getSession())
                 .createIntent()
         )
         resultDisposable = TwitterResultReceiver().twitterResultObservable?.subscribe {
-            ShareUtils.clearShareTempPictures(context)
+            ShareUtils.clearShareTempPictures(activity)
             when (it) {
                 TweetUploadService.UPLOAD_SUCCESS -> onShareListener.onShareSuccess(TWITTER)
                 TweetUploadService.TWEET_COMPOSE_CANCEL -> onShareListener.onShareFail(TWITTER, "Twitter share cancel")
@@ -65,12 +69,8 @@ class TwitterShareManager(private val context: Context, private val onShareListe
         }
     }
 
-    private fun checkSession(): Boolean {
-        val session = TwitterCore.getInstance().sessionManager.activeSession
-        return if (session == null) {
-            onShareListener.onShareFail(TWITTER, "Twitter share fail, need Login by Twitter first")
-            false
-        } else true
+    private fun getSession(): TwitterSession? {
+        return TwitterCore.getInstance().sessionManager.activeSession
     }
 
 

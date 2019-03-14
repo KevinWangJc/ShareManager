@@ -5,10 +5,10 @@
         package="com.example.share">
 
     <application
+            android:name=".MyApplication"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
-            android:name=".MyApplication"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
@@ -20,25 +20,24 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
-        <!-- facebook -->
+        <activity android:name=".LoginActivity"/>
+        <activity android:name=".ShareActivity"/>
+        <!-- facebook Login -->
         <meta-data
                 android:name="com.facebook.sdk.ApplicationId"
                 android:value="@string/facebook_app_id"/>
-
-        <!--facebook分享，需要手动替换appId：android:authorities="com.facebook.app.FacebookContentProvider{APP_ID}"-->
-        <provider
-                android:name="com.facebook.FacebookContentProvider"
-                android:authorities="com.facebook.app.FacebookContentProvider2320668714924955"
-                android:exported="true"/>
-
-        <!--Twitter-->
+        <!-- Twitter Login -->
         <meta-data
                 android:name="twitter_consumer_key"
                 android:value="@string/twitter_consumer_key"/>
         <meta-data
                 android:name="twitter_consumer_secret"
                 android:value="@string/twitter_consumer_secret"/>
+        <!-- facebook分享，需要手动替换appId：android:authorities="com.facebook.app.FacebookContentProvider{APP_ID}" -->
+        <provider
+                android:name="com.facebook.FacebookContentProvider"
+                android:authorities="com.facebook.app.FacebookContentProvider2320668714924955"
+                android:exported="true"/>
     </application>
 
 </manifest>
