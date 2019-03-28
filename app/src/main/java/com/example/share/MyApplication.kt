@@ -2,7 +2,6 @@ package com.example.share
 
 import android.app.Application
 import com.base.library.login.LoginManager
-import com.base.library.share.ShareManager
 
 /**
  * Description:
@@ -16,6 +15,5 @@ class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         LoginManager.init(this)
-        ShareManager.init(this)
     }
 }

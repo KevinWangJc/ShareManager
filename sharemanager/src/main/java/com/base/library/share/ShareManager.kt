@@ -1,24 +1,15 @@
 package com.base.library.share
 
 import android.app.Activity
-import android.app.Application
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.support.v4.app.Fragment
-import android.text.TextUtils
-import android.util.Log
-import com.base.library.BuildConfig
 import com.base.library.share.common.constants.ShareConstants
 import com.base.library.share.common.listener.OnShareListener
 import com.base.library.share.email.EmailShareManager
 import com.base.library.share.facebook.FacebookShareManager
 import com.base.library.share.sms.SMSShareManager
 import com.base.library.share.twitter.TwitterShareManager
-import com.twitter.sdk.android.core.DefaultLogger
-import com.twitter.sdk.android.core.Twitter
-import com.twitter.sdk.android.core.TwitterAuthConfig
-import com.twitter.sdk.android.core.TwitterConfig
 
 
 /**
@@ -56,28 +47,6 @@ class ShareManager {
         this.activity = activity
         this.onShareListener = onShareListener
     }
-
-    companion object {
-
-        fun init(app: Application) {
-            initTwitter(app)
-        }
-
-        private fun initTwitter(app: Application) {
-            val applicationInfo = app.packageManager.getApplicationInfo(app.packageName, PackageManager.GET_META_DATA)
-            val metaData = applicationInfo.metaData
-            val twitterConsumerKey = metaData.get("twitter_consumer_key")?.toString()
-            val twitterConsumerSecret = metaData.get("twitter_consumer_secret")?.toString()
-            if (TextUtils.isEmpty(twitterConsumerKey) || TextUtils.isEmpty(twitterConsumerSecret)) return
-            val config = TwitterConfig.Builder(app)
-                .logger(DefaultLogger(Log.DEBUG))
-                .twitterAuthConfig(TwitterAuthConfig(twitterConsumerKey, twitterConsumerSecret))
-                .debug(BuildConfig.DEBUG)
-                .build()
-            Twitter.initialize(config)
-        }
-    }
-
 
     private fun getFacebookShareManager(): FacebookShareManager? {
         if (facebookShareManager == null)
