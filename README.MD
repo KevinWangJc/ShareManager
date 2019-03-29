@@ -7,12 +7,8 @@ This is a library to help you add share by Facebook, Twitter, Email and SMS to y
 
 ## Screenshot
 
-<img src="screenshots/login.gif" width=25%>
-<img src="screenshots/shareByFacebook.gif" width=25%>
-<img src="screenshots/shareLocalByFacebook.gif" width=25%>
-<img src="screenshots/shareByTwitter.gif" width=25%>
-<img src="screenshots/sendEmail.gif" width=25%>
-<img src="screenshots/sendSms.gif" width=25%>
+<img src="screenshots/login.gif" width=25%><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><img src="screenshots/shareByFacebook.gif" width=25%><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><img src="screenshots/shareLocalByFacebook.gif" width=25%>
+<img src="screenshots/shareByTwitter.gif" width=25%><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><img src="screenshots/sendEmail.gif" width=25%><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><img src="screenshots/sendSms.gif" width=25%>
 
 ## Download
 
