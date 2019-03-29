@@ -4,7 +4,6 @@ import android.app.Activity
 import android.net.Uri
 import com.base.library.share.common.constants.ShareConstants.Companion.TWITTER
 import com.base.library.share.common.listener.OnShareListener
-import com.base.library.share.common.util.ShareUtils
 import com.twitter.sdk.android.core.TwitterCore
 import com.twitter.sdk.android.core.TwitterSession
 import com.twitter.sdk.android.tweetcomposer.ComposerActivity
@@ -38,7 +37,6 @@ class TwitterShareManager(private val activity: Activity, private val onShareLis
     fun shareImage(image: Any? = Uri.EMPTY, text: String = "") {
         if (!isValid(image, text)) return
         TwitterResultReceiver.resultObserver = Consumer {
-            ShareUtils.clearShareTempPictures(activity)
             when (it) {
                 TweetUploadService.UPLOAD_SUCCESS -> onShareListener.onShareSuccess(TWITTER)
                 TweetUploadService.TWEET_COMPOSE_CANCEL -> onShareListener.onShareFail(TWITTER, "Twitter share cancel")

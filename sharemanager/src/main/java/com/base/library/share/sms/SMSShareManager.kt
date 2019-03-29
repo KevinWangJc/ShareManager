@@ -3,8 +3,6 @@ package com.base.library.share.sms
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import com.base.library.share.common.constants.ShareConstants.Companion.REQUEST_CODE_SEND_SMS
-import com.base.library.share.common.constants.ShareConstants.Companion.SMS
 import com.base.library.share.common.listener.OnShareListener
 
 /**
@@ -27,16 +25,7 @@ class SMSShareManager(private val activity: Activity, private val onShareListene
         sendIntent.putExtra("address", phoneNumber)
         sendIntent.putExtra("sms_body", smsBody)
         sendIntent.type = "vnd.android-dir/mms-sms"
-        activity.startActivityForResult(Intent.createChooser(sendIntent,"Choose App"), REQUEST_CODE_SEND_SMS)
+        activity.startActivity(Intent.createChooser(sendIntent,"Choose App"))
     }
 
-    fun handleActivityResult(requestCode: Int, resultCode: Int) {
-        if (requestCode == REQUEST_CODE_SEND_SMS) {
-            when (resultCode) {
-                Activity.RESULT_OK -> onShareListener.onShareSuccess(SMS)
-                Activity.RESULT_CANCELED -> onShareListener.onShareFail(SMS, "SMS share cancel")
-                else -> onShareListener.onShareFail(SMS, "SMS share fail")
-            }
-        }
-    }
 }

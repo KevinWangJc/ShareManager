@@ -116,25 +116,39 @@ class ShareManager {
         }
     }
 
-    fun sendEmail(emailBody: String = "", emailSubject: String = "") {
-        getEmailShareManager()?.sendTextEmail(emailBody, emailSubject)
+    fun sendEmail(
+        emailBody: String = "", emailSubject: String = "",
+        tos: Array<String> = arrayOf(),
+        ccs: Array<String> = arrayOf()
+    ) {
+        getEmailShareManager()?.sendTextEmail(emailBody, emailSubject, tos, ccs)
     }
 
-    fun sendImageEmail(image: Any = Uri.EMPTY, emailBody: String = "", emailSubject: String = "") {
-        getEmailShareManager()?.sendImageEmail(image, emailBody, emailSubject)
+    fun sendImageEmail(
+        image: Any = Uri.EMPTY, emailBody: String = "", emailSubject: String = "",
+        tos: Array<String> = arrayOf(),
+        ccs: Array<String> = arrayOf()
+    ) {
+        getEmailShareManager()?.sendImageEmail(image, emailBody, emailSubject, tos, ccs)
     }
 
-    fun sendVideoEmail(video: Uri = Uri.EMPTY, emailBody: String = "", emailSubject: String = "") {
-        getEmailShareManager()?.sendVideoEmail(video, emailBody, emailSubject)
+    fun sendVideoEmail(
+        video: Uri = Uri.EMPTY, emailBody: String = "", emailSubject: String = "",
+        tos: Array<String> = arrayOf(),
+        ccs: Array<String> = arrayOf()
+    ) {
+        getEmailShareManager()?.sendVideoEmail(video, emailBody, emailSubject, tos, ccs)
     }
 
     fun sendMediaEmail(
         imageList: List<Any> = ArrayList(),
         videoList: List<Uri> = ArrayList(),
         emailBody: String = "",
-        emailSubject: String = ""
+        emailSubject: String = "",
+        tos: Array<String> = arrayOf(),
+        ccs: Array<String> = arrayOf()
     ) {
-        getEmailShareManager()?.sendMediaEmail(imageList, videoList, emailBody, emailSubject)
+        getEmailShareManager()?.sendMediaEmail(imageList, videoList, emailBody, emailSubject, tos, ccs)
     }
 
     fun sendSMS(smsBody: String = "", phoneNumber: String = "") {
@@ -143,8 +157,6 @@ class ShareManager {
 
     fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         facebookShareManager?.handleActivityResult(requestCode, resultCode, data)
-        emailShareManager?.handleActivityResult(requestCode, resultCode)
-        smsShareManager?.handleActivityResult(requestCode, resultCode)
     }
 
     fun release() {

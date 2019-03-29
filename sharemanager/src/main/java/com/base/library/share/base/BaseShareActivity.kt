@@ -38,20 +38,44 @@ abstract class BaseShareActivity : AppCompatActivity(), OnShareListener {
         shareManager.shareMedia(type, imageList, videoUriList, tag)
     }
 
-    fun sendEmail(emailBody: String = "", emailSubject: String = "") {
-        shareManager.sendEmail(emailBody, emailSubject)
+    fun sendEmail(
+        emailBody: String = "",
+        emailSubject: String = "",
+        tos: Array<String> = arrayOf(),
+        ccs: Array<String> = arrayOf()
+    ) {
+        shareManager.sendEmail(emailBody, emailSubject, tos, ccs)
     }
 
-    fun sendImageEmail(image: Any, emailBody: String = "", emailSubject: String = "") {
-        shareManager.sendImageEmail(image, emailBody, emailSubject)
+    fun sendImageEmail(
+        image: Any,
+        emailBody: String = "",
+        emailSubject: String = "",
+        tos: Array<String> = arrayOf(),
+        ccs: Array<String> = arrayOf()
+    ) {
+        shareManager.sendImageEmail(image, emailBody, emailSubject, tos, ccs)
     }
 
-    fun sendVideoEmail(video: Uri, emailBody: String = "", emailSubject: String = "") {
-        shareManager.sendVideoEmail(video, emailBody, emailSubject)
+    fun sendVideoEmail(
+        video: Uri,
+        emailBody: String = "",
+        emailSubject: String = "",
+        tos: Array<String> = arrayOf(),
+        ccs: Array<String> = arrayOf()
+    ) {
+        shareManager.sendVideoEmail(video, emailBody, emailSubject, tos, ccs)
     }
 
-    fun sendMediaEmail(imageList: List<Any> = ArrayList(), videoList: List<Uri> = ArrayList(), emailBody: String = "", emailSubject: String = "") {
-        shareManager.sendMediaEmail(imageList, videoList, emailBody, emailSubject)
+    fun sendMediaEmail(
+        imageList: List<Any> = ArrayList(),
+        videoList: List<Uri> = ArrayList(),
+        emailBody: String = "",
+        emailSubject: String = "",
+        tos: Array<String> = arrayOf(),
+        ccs: Array<String> = arrayOf()
+    ) {
+        shareManager.sendMediaEmail(imageList, videoList, emailBody, emailSubject, tos, ccs)
     }
 
     fun sendSMS(smsBody: String = "", phoneNumber: String = "") {
@@ -65,7 +89,7 @@ abstract class BaseShareActivity : AppCompatActivity(), OnShareListener {
 
     override fun onStop() {
         super.onStop()
-        if(isFinishing){
+        if (isFinishing) {
             shareManager.release()
         }
     }

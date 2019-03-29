@@ -1,13 +1,9 @@
 package com.base.library.share.email
 
 import android.app.Activity
-import android.app.Activity.RESULT_CANCELED
-import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
-import com.base.library.share.common.constants.ShareConstants.Companion.EMAIL
-import com.base.library.share.common.constants.ShareConstants.Companion.REQUEST_CODE_SEND_EMAIL
 import com.base.library.share.common.listener.OnShareListener
 import com.base.library.share.common.util.ShareUtils
 
@@ -25,16 +21,40 @@ class EmailShareManager(private val activity: Activity, private val onShareListe
      * @param emailBody 邮件内容
      * @param emailSubject 邮件主题
      */
-    fun sendTextEmail(emailBody: String = "", emailSubject: String = "") {
-        sendMediaEmail(emailBody = emailBody, emailSubject = emailSubject)
+    fun sendTextEmail(
+        emailBody: String = "", emailSubject: String = "",
+        tos: Array<String> = arrayOf(),
+        ccs: Array<String> = arrayOf()
+    ) {
+        sendMediaEmail(emailBody = emailBody, emailSubject = emailSubject, tos = tos, ccs = ccs)
     }
 
-    fun sendImageEmail(image: Any, emailBody: String = "", emailSubject: String = "") {
-        sendMediaEmail(imageList = listOf(image), emailBody = emailBody, emailSubject = emailSubject)
+    fun sendImageEmail(
+        image: Any, emailBody: String = "", emailSubject: String = "",
+        tos: Array<String> = arrayOf(),
+        ccs: Array<String> = arrayOf()
+    ) {
+        sendMediaEmail(
+            imageList = listOf(image),
+            emailBody = emailBody,
+            emailSubject = emailSubject,
+            tos = tos,
+            ccs = ccs
+        )
     }
 
-    fun sendVideoEmail(video: Uri, emailBody: String = "", emailSubject: String = "") {
-        sendMediaEmail(videoList = listOf(video), emailBody = emailBody, emailSubject = emailSubject)
+    fun sendVideoEmail(
+        video: Uri, emailBody: String = "", emailSubject: String = "",
+        tos: Array<String> = arrayOf(),
+        ccs: Array<String> = arrayOf()
+    ) {
+        sendMediaEmail(
+            videoList = listOf(video),
+            emailBody = emailBody,
+            emailSubject = emailSubject,
+            tos = tos,
+            ccs = ccs
+        )
     }
 
     @Suppress("DEPRECATION")
@@ -42,7 +62,9 @@ class EmailShareManager(private val activity: Activity, private val onShareListe
         imageList: List<Any> = ArrayList(),
         videoList: List<Uri> = ArrayList(),
         emailBody: String = "",
-        emailSubject: String = ""
+        emailSubject: String = "",
+        tos: Array<String> = arrayOf(),
+        ccs: Array<String> = arrayOf()
     ) {
         val email = Intent(Intent.ACTION_SEND_MULTIPLE)
         email.type = "application/octet-stream"
@@ -62,20 +84,8 @@ class EmailShareManager(private val activity: Activity, private val onShareListe
         email.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris)
         email.putExtra(Intent.EXTRA_TEXT, emailBody)
         email.putExtra(Intent.EXTRA_SUBJECT, emailSubject)
-        activity.startActivityForResult(
-            Intent.createChooser(email, "Choose App"),
-            REQUEST_CODE_SEND_EMAIL
-        )
-    }
-
-    fun handleActivityResult(requestCode: Int, resultCode: Int) {
-        if (requestCode == REQUEST_CODE_SEND_EMAIL) {
-            ShareUtils.clearShareTempPictures(activity)
-            when (resultCode) {
-                RESULT_OK -> onShareListener.onShareSuccess(EMAIL)
-                RESULT_CANCELED -> onShareListener.onShareFail(EMAIL, "Email share cancel")
-                else -> onShareListener.onShareFail(EMAIL, "Email share fail")
-            }
-        }
+        email.putExtra(Intent.EXTRA_EMAIL, tos)
+        email.putExtra(Intent.EXTRA_CC, ccs)
+        activity.startActivity(Intent.createChooser(email, "Choose App"))
     }
 }

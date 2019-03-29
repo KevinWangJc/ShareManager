@@ -45,27 +45,27 @@ class ShareActivity : BaseShareActivity() {
         /**facebook分享文字*/
         btn_share_text_by_facebook.setOnClickListener {
             shareText(
-                    ShareConstants.FACEBOOK,
-                    "This manager is as steady as an old dog!"
+                ShareConstants.FACEBOOK,
+                "This manager is as steady as an old dog!"
             )
         }
 
         /**facebook分享链接*/
         btn_share_link_by_facebook.setOnClickListener {
             shareLink(
-                    ShareConstants.FACEBOOK,
-                    "https://github.com/wkxjc/ShareManager",
-                    "#ShareManager",
-                    "This manager is as steady as an old dog!"
+                ShareConstants.FACEBOOK,
+                "https://github.com/wkxjc/ShareManager",
+                "#ShareManager",
+                "This manager is as steady as an old dog!"
             )
         }
 
         /**facebook分享bitmap图片*/
         btn_share_bitmap_by_facebook.setOnClickListener {
             shareImage(
-                    ShareConstants.FACEBOOK,
-                    BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher),
-                    "#ShareManager"
+                ShareConstants.FACEBOOK,
+                BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher),
+                "#ShareManager"
             )
         }
 
@@ -80,9 +80,9 @@ class ShareActivity : BaseShareActivity() {
         btn_share_local_image_by_facebook.setOnClickListener {
             if (!checkLocalImageUri()) return@setOnClickListener
             shareImage(
-                    ShareConstants.FACEBOOK,
-                    localImageUri,
-                    "#ShareManager"
+                ShareConstants.FACEBOOK,
+                localImageUri,
+                "#ShareManager"
             )
         }
 
@@ -97,9 +97,9 @@ class ShareActivity : BaseShareActivity() {
         btn_share_video_by_facebook.setOnClickListener {
             if (!checkLocalVideoUri()) return@setOnClickListener
             shareVideo(
-                    ShareConstants.FACEBOOK,
-                    localVideoUri,
-                    "#ShareManager"
+                ShareConstants.FACEBOOK,
+                localVideoUri,
+                "#ShareManager"
             )
         }
 
@@ -107,22 +107,22 @@ class ShareActivity : BaseShareActivity() {
         btn_share_media_by_facebook.setOnClickListener {
             if (!checkLocalVideoUri()) return@setOnClickListener
             shareMedia(
-                    ShareConstants.FACEBOOK,
-                    listOf(
-                            BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher),
-                            BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher_round),
-                            BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
-                    ),
-                    listOf(localVideoUri, localVideoUri, localVideoUri),
-                    "#ShareManager"
+                ShareConstants.FACEBOOK,
+                listOf(
+                    BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher),
+                    BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher_round),
+                    BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
+                ),
+                listOf(localVideoUri, localVideoUri, localVideoUri),
+                "#ShareManager"
             )
         }
 
         /**twitter分享文字*/
         btn_share_text_by_twitter.setOnClickListener {
             shareText(
-                    ShareConstants.TWITTER,
-                    "This manager is as steady as an old dog!"
+                ShareConstants.TWITTER,
+                "This manager is as steady as an old dog!"
             )
         }
 
@@ -135,17 +135,19 @@ class ShareActivity : BaseShareActivity() {
         btn_share_local_image_by_twitter.setOnClickListener {
             if (!checkLocalImageUri()) return@setOnClickListener
             shareImage(
-                    ShareConstants.TWITTER,
-                    localImageUri,
-                    "#ShareManager"
+                ShareConstants.TWITTER,
+                localImageUri,
+                "#ShareManager"
             )
         }
 
         /**邮件发送文字*/
         btn_send_text_email.setOnClickListener {
             sendEmail(
-                    "This manager is as steady as an old dog!",
-                    "ShareManager"
+                "This manager is as steady as an old dog!",
+                "ShareManager",
+                arrayOf("wangkaixuanjc@gmail.com"),
+                arrayOf("1932746358@qq.com")
             )
         }
 
@@ -153,9 +155,11 @@ class ShareActivity : BaseShareActivity() {
         btn_send_image_email.setOnClickListener {
             if (!checkLocalImageUri()) return@setOnClickListener
             sendImageEmail(
-                    localImageUri,
-                    "This manager is as steady as an old dog!",
-                    "ShareManager"
+                localImageUri,
+                "This manager is as steady as an old dog!",
+                "ShareManager",
+                arrayOf("wangkaixuanjc@gmail.com"),
+                arrayOf("1932746358@qq.com")
             )
         }
 
@@ -163,31 +167,35 @@ class ShareActivity : BaseShareActivity() {
         btn_send_video_email.setOnClickListener {
             if (!checkLocalVideoUri()) return@setOnClickListener
             sendVideoEmail(
-                    localVideoUri,
-                    "This manager is as steady as an old dog!",
-                    "ShareManager"
+                localVideoUri,
+                "This manager is as steady as an old dog!",
+                "ShareManager",
+                arrayOf("wangkaixuanjc@gmail.com"),
+                arrayOf("1932746358@qq.com")
             )
         }
 
         /**邮件发送多媒体*/
         btn_send_media_email.setOnClickListener {
             sendMediaEmail(
-                    listOf(
-                            BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher),
-                            BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher_round),
-                            BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
-                    ),
-                    listOf(localVideoUri),
-                    "This manager is as steady as an old dog!",
-                    "ShareManager"
+                listOf(
+                    BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher),
+                    BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher_round),
+                    BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
+                ),
+                listOf(localVideoUri),
+                "This manager is as steady as an old dog!",
+                "ShareManager",
+                arrayOf("wangkaixuanjc@gmail.com"),
+                arrayOf("1932746358@qq.com")
             )
         }
 
         /**SMS分享*/
         btn_send_sms.setOnClickListener {
             sendSMS(
-                    "This manager is as steady as an old dog!",
-                    "10086"
+                "This manager is as steady as an old dog!",
+                "10086"
             )
         }
     }
@@ -214,12 +222,14 @@ class ShareActivity : BaseShareActivity() {
 
     private fun requestPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED)
+            == PackageManager.PERMISSION_GRANTED
+        )
             return
-        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                1)
+        ActivityCompat.requestPermissions(
+            this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+            1
+        )
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

@@ -5,6 +5,15 @@
 
 这是一个帮助添加Facebook、Twitter分享，邮件、短信分享的库。
 
+## 屏幕截图
+
+<img src="screenshots/login.gif" width=25%>
+<img src="screenshots/shareByFacebook.gif" width=25%>
+<img src="screenshots/shareLocalByFacebook.gif" width=25%>
+<img src="screenshots/shareByTwitter.gif" width=25%>
+<img src="screenshots/sendEmail.gif" width=25%>
+<img src="screenshots/sendSms.gif" width=25%>
+
 ## 下载
 
 第一步. 在根目录的 build.gradle 中添加:
@@ -104,37 +113,47 @@ btn_share_local_image_by_twitter.setOnClickListener {
 /**邮件发送文字*/
 btn_send_text_email.setOnClickListener {
     sendEmail(
-            "This manager is as steady as an old dog!",
-            "ShareManager"
+        "This manager is as steady as an old dog!",
+        "ShareManager",
+        arrayOf("wangkaixuanjc@gmail.com"),
+        arrayOf("1932746358@qq.com")
     )
 }
 /**邮件发送图片*/
 btn_send_image_email.setOnClickListener {
+    if (!checkLocalImageUri()) return@setOnClickListener
     sendImageEmail(
-            localImageUri,
-            "This manager is as steady as an old dog!",
-            "ShareManager"
+        localImageUri,
+        "This manager is as steady as an old dog!",
+        "ShareManager",
+        arrayOf("wangkaixuanjc@gmail.com"),
+        arrayOf("1932746358@qq.com")
     )
 }
 /**邮件发送视频*/
 btn_send_video_email.setOnClickListener {
+    if (!checkLocalVideoUri()) return@setOnClickListener
     sendVideoEmail(
-            localVideoUri,
-            "This manager is as steady as an old dog!",
-            "ShareManager"
+        localVideoUri,
+        "This manager is as steady as an old dog!",
+        "ShareManager",
+        arrayOf("wangkaixuanjc@gmail.com"),
+        arrayOf("1932746358@qq.com")
     )
 }
 /**邮件发送多媒体*/
 btn_send_media_email.setOnClickListener {
     sendMediaEmail(
-            listOf(
-                    BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher),
-                    BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher_round),
-                    BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
-            ),
-            listOf(localVideoUri),
-            "This manager is as steady as an old dog!",
-            "ShareManager"
+        listOf(
+            BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher),
+            BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher_round),
+            BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
+        ),
+        listOf(localVideoUri),
+        "This manager is as steady as an old dog!",
+        "ShareManager",
+        arrayOf("wangkaixuanjc@gmail.com"),
+        arrayOf("1932746358@qq.com")
     )
 }
 /**SMS分享*/
@@ -197,20 +216,44 @@ abstract class BaseShareActivity : AppCompatActivity(), OnShareListener {
         shareManager.shareMedia(type, imageList, videoUriList, tag)
     }
 
-    fun sendEmail(emailBody: String = "", emailSubject: String = "") {
-        shareManager.sendEmail(emailBody, emailSubject)
+    fun sendEmail(
+        emailBody: String = "",
+        emailSubject: String = "",
+        tos: Array<String> = arrayOf(),
+        ccs: Array<String> = arrayOf()
+    ) {
+        shareManager.sendEmail(emailBody, emailSubject, tos, ccs)
     }
 
-    fun sendImageEmail(image: Any, emailBody: String = "", emailSubject: String = "") {
-        shareManager.sendImageEmail(image, emailBody, emailSubject)
+    fun sendImageEmail(
+        image: Any,
+        emailBody: String = "",
+        emailSubject: String = "",
+        tos: Array<String> = arrayOf(),
+        ccs: Array<String> = arrayOf()
+    ) {
+        shareManager.sendImageEmail(image, emailBody, emailSubject, tos, ccs)
     }
 
-    fun sendVideoEmail(video: Uri, emailBody: String = "", emailSubject: String = "") {
-        shareManager.sendVideoEmail(video, emailBody, emailSubject)
+    fun sendVideoEmail(
+        video: Uri,
+        emailBody: String = "",
+        emailSubject: String = "",
+        tos: Array<String> = arrayOf(),
+        ccs: Array<String> = arrayOf()
+    ) {
+        shareManager.sendVideoEmail(video, emailBody, emailSubject, tos, ccs)
     }
 
-    fun sendMediaEmail(imageList: List<Any> = ArrayList(), videoList: List<Uri> = ArrayList(), emailBody: String = "", emailSubject: String = "") {
-        shareManager.sendMediaEmail(imageList, videoList, emailBody, emailSubject)
+    fun sendMediaEmail(
+        imageList: List<Any> = ArrayList(),
+        videoList: List<Uri> = ArrayList(),
+        emailBody: String = "",
+        emailSubject: String = "",
+        tos: Array<String> = arrayOf(),
+        ccs: Array<String> = arrayOf()
+    ) {
+        shareManager.sendMediaEmail(imageList, videoList, emailBody, emailSubject, tos, ccs)
     }
 
     fun sendSMS(smsBody: String = "", phoneNumber: String = "") {
@@ -224,7 +267,7 @@ abstract class BaseShareActivity : AppCompatActivity(), OnShareListener {
 
     override fun onStop() {
         super.onStop()
-        if(isFinishing){
+        if (isFinishing) {
             shareManager.release()
         }
     }
