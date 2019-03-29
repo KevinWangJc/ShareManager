@@ -1,7 +1,6 @@
 package com.base.library.share.twitter
 
 import android.app.Activity
-import android.graphics.Bitmap
 import android.net.Uri
 import com.base.library.share.common.constants.ShareConstants.Companion.TWITTER
 import com.base.library.share.common.listener.OnShareListener
@@ -10,7 +9,6 @@ import com.twitter.sdk.android.core.TwitterCore
 import com.twitter.sdk.android.core.TwitterSession
 import com.twitter.sdk.android.tweetcomposer.ComposerActivity
 import com.twitter.sdk.android.tweetcomposer.TweetUploadService
-import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Consumer
 
 /**
@@ -22,9 +20,6 @@ import io.reactivex.functions.Consumer
  * Date:    2018/12/4
  */
 class TwitterShareManager(private val activity: Activity, private val onShareListener: OnShareListener) {
-
-    // 接收分享结果
-    private var resultDisposable: Disposable? = null
 
     /**
      * 分享文字
@@ -41,39 +36,43 @@ class TwitterShareManager(private val activity: Activity, private val onShareLis
      * @param text 文字内容
      */
     fun shareImage(image: Any? = Uri.EMPTY, text: String = "") {
-        getSession() ?: let {
-            onShareListener.onShareFail(TWITTER, "Twitter share fail, need Login by Twitter first")
-            return
-        }
-        val imageUri = when (image) {
-            is Bitmap -> ShareUtils.bitmap2Uri(activity, image)
-            is Uri -> image
-            else -> Uri.EMPTY
-        }
+        if (!isValid(image, text)) return
         TwitterResultReceiver.resultObserver = Consumer {
             ShareUtils.clearShareTempPictures(activity)
             when (it) {
                 TweetUploadService.UPLOAD_SUCCESS -> onShareListener.onShareSuccess(TWITTER)
                 TweetUploadService.TWEET_COMPOSE_CANCEL -> onShareListener.onShareFail(TWITTER, "Twitter share cancel")
                 else -> onShareListener.onShareFail(
-                    TWITTER,
-                    "Twitter share fail, please check if the content is duplicate"
+                        TWITTER,
+                        "Twitter share fail, please check if the content is duplicate"
                 )
             }
         }
-        activity.startActivity(
-            ComposerActivity.Builder(activity)
-                .image(imageUri)
-                .text(text)
-                .session(getSession())
-                .createIntent()
-        )
+        val builder = ComposerActivity.Builder(activity).session(getSession())
+        if (image != Uri.EMPTY) builder.image(image as Uri)
+        if (!text.isEmpty()) builder.text(text)
+        activity.startActivity(builder.createIntent())
+    }
+
+    private fun isValid(image: Any? = Uri.EMPTY, text: String = ""): Boolean {
+        if (image !is Uri) {
+            onShareListener.onShareFail(TWITTER, "Twitter share fail, Twitter share only support local image uri")
+            return false
+        }
+        getSession() ?: let {
+            onShareListener.onShareFail(TWITTER, "Twitter share fail, need Login by Twitter first")
+            return false
+        }
+        if (image == Uri.EMPTY && text.isEmpty()) {
+            onShareListener.onShareFail(TWITTER, "Twitter share fail, both image and text is empty")
+            return false
+        }
+        return true
     }
 
     private fun getSession(): TwitterSession? {
         return TwitterCore.getInstance().sessionManager.activeSession
     }
-
 
     fun release() {
         TwitterResultReceiver.disposable?.dispose()

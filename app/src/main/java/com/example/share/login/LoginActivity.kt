@@ -37,7 +37,7 @@ class LoginActivity : BaseLoginActivity() {
     }
 
     override fun onLoginFail(type: String, cause: String) {
-        Log.d("~~~","Login Result: Fail\n\nLogin type:$type\n\ncause:$cause")
+        Log.d("~~~", "Login Result: Fail\n\nLogin type:$type\n\ncause:$cause")
         tv_login_result.text = "Login Result: Fail\n\nLogin type:$type\n\ncause:$cause"
     }
 }

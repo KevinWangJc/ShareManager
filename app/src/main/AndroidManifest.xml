@@ -33,7 +33,7 @@
         <meta-data
                 android:name="twitter_consumer_secret"
                 android:value="@string/twitter_consumer_secret"/>
-        <!-- facebook分享，需要手动替换appId：android:authorities="com.facebook.app.FacebookContentProvider{APP_ID}" -->
+        <!-- facebook分享，需要手动替换appId：android:authorities="com.facebook.app.FacebookContentProviderYOUR_FACEBOOK_APP_ID" -->
         <provider
                 android:name="com.facebook.FacebookContentProvider"
                 android:authorities="com.facebook.app.FacebookContentProvider2320668714924955"
