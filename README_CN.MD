@@ -27,7 +27,7 @@ allprojects {
 
 ```
 dependencies {
-        implementation 'com.github.wkxjc:ShareManager:1.0.1'
+        implementation 'com.github.wkxjc:ShareManager:1.0.3'
         // make sure you have added support-design library, you can use your own version
         implementation 'com.android.support:design:28.0.0'
 }
