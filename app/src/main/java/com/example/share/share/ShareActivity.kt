@@ -141,7 +141,7 @@ class ShareActivity : BaseShareActivity() {
             )
         }
 
-        /**Email分享*/
+        /**邮件发送文字*/
         btn_send_text_email.setOnClickListener {
             sendEmail(
                     "This manager is as steady as an old dog!",
@@ -149,6 +149,7 @@ class ShareActivity : BaseShareActivity() {
             )
         }
 
+        /**邮件发送图片*/
         btn_send_image_email.setOnClickListener {
             if (!checkLocalImageUri()) return@setOnClickListener
             sendImageEmail(
@@ -158,6 +159,7 @@ class ShareActivity : BaseShareActivity() {
             )
         }
 
+        /**邮件发送视频*/
         btn_send_video_email.setOnClickListener {
             if (!checkLocalVideoUri()) return@setOnClickListener
             sendVideoEmail(
@@ -167,6 +169,7 @@ class ShareActivity : BaseShareActivity() {
             )
         }
 
+        /**邮件发送多媒体*/
         btn_send_media_email.setOnClickListener {
             sendMediaEmail(
                     listOf(

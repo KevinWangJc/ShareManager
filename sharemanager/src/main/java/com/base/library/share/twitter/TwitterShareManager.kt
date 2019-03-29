@@ -43,8 +43,8 @@ class TwitterShareManager(private val activity: Activity, private val onShareLis
                 TweetUploadService.UPLOAD_SUCCESS -> onShareListener.onShareSuccess(TWITTER)
                 TweetUploadService.TWEET_COMPOSE_CANCEL -> onShareListener.onShareFail(TWITTER, "Twitter share cancel")
                 else -> onShareListener.onShareFail(
-                        TWITTER,
-                        "Twitter share fail, please check if the content is duplicate"
+                    TWITTER,
+                    "Twitter share fail, please check if the content is duplicate"
                 )
             }
         }

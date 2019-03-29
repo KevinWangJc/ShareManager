@@ -30,208 +30,118 @@ dependencies {
 
 ## How to use
 
-Share by Google, Facebook or Twitter just need one line of code:
+Share by Facebook, Twitter, Email or SMS just need one line of code:
 
 ```
-class ShareActivity : BaseShareActivity() {
+btn_share_text_by_facebook.setOnClickListener {
+    shareText(
+            ShareConstants.FACEBOOK,
+            "This manager is as steady as an old dog!"
+    )
+}
 
-    private var localVideoUri: Uri = Uri.EMPTY
-    private var localImageUri: Uri = Uri.EMPTY
+btn_share_link_by_facebook.setOnClickListener {
+    shareLink(
+            ShareConstants.FACEBOOK,
+            "https://github.com/wkxjc/ShareManager",
+            "#ShareManager",
+            "This manager is as steady as an old dog!"
+    )
+}
 
-    companion object {
-        const val REQUEST_CODE_CHOOSE_LOCAL_IMAGE = 1008
-        const val REQUEST_CODE_CHOOSE_LOCAL_VIDEO = 1009
-    }
+btn_share_bitmap_by_facebook.setOnClickListener {
+    shareImage(
+            ShareConstants.FACEBOOK,
+            BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher),
+            "#ShareManager"
+    )
+}
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_share)
-        initView()
-    }
+btn_share_local_image_by_facebook.setOnClickListener {
+    shareImage(
+            ShareConstants.FACEBOOK,
+            localImageUri,
+            "#ShareManager"
+    )
+}
 
-    private fun initView() {
-        btn_share_text_by_facebook.setOnClickListener {
-            shareText(
-                ShareConstants.FACEBOOK,
-                "This manager is as steady as an old dog!"
-            )
-        }
+btn_share_video_by_facebook.setOnClickListener {
+    shareVideo(
+            ShareConstants.FACEBOOK,
+            localVideoUri,
+            "#ShareManager"
+    )
+}
 
-        btn_share_link_by_facebook.setOnClickListener {
-            shareLink(
-                ShareConstants.FACEBOOK,
-                "https://github.com/wkxjc/ShareManager",
-                "#ShareManager",
-                "This manager is as steady as an old dog!"
-            )
-        }
-
-        btn_share_bitmap_by_facebook.setOnClickListener {
-            shareImage(
-                ShareConstants.FACEBOOK,
-                BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher),
-                "#ShareManager"
-            )
-        }
-
-        btn_choose_local_image.setOnClickListener {
-            startActivityForResult(Intent.createChooser(Intent(Intent.ACTION_GET_CONTENT).apply {
-                type = "image/*"
-            }, "Choose App"), REQUEST_CODE_CHOOSE_LOCAL_IMAGE)
-        }
-
-        btn_share_local_image_by_facebook.setOnClickListener {
-            if (!checkLocalImageUri()) return@setOnClickListener
-            shareImage(
-                ShareConstants.FACEBOOK,
-                localImageUri,
-                "#ShareManager"
-            )
-        }
-
-        btn_choose_local_video.setOnClickListener {
-            startActivityForResult(Intent.createChooser(Intent(Intent.ACTION_GET_CONTENT).apply {
-                type = "video/*"
-            }, "Choose App"), REQUEST_CODE_CHOOSE_LOCAL_VIDEO)
-        }
-
-        btn_share_video_by_facebook.setOnClickListener {
-            if (!checkLocalVideoUri()) return@setOnClickListener
-            shareVideo(
-                ShareConstants.FACEBOOK,
-                localVideoUri,
-                "#ShareManager"
-            )
-        }
-
-        btn_share_media_by_facebook.setOnClickListener {
-            if (!checkLocalVideoUri()) return@setOnClickListener
-            shareMedia(
-                ShareConstants.FACEBOOK,
-                listOf(
+btn_share_media_by_facebook.setOnClickListener {
+    shareMedia(
+            ShareConstants.FACEBOOK,
+            listOf(
                     BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher),
                     BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher_round),
                     BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
-                ),
-                listOf(localVideoUri, localVideoUri, localVideoUri),
-                "#ShareManager"
-            )
-        }
+            ),
+            listOf(localVideoUri, localVideoUri, localVideoUri),
+            "#ShareManager"
+    )
+}
 
-        btn_share_text_by_twitter.setOnClickListener {
-            shareText(
-                ShareConstants.TWITTER,
-                "This manager is as steady as an old dog!"
-            )
-        }
+btn_share_text_by_twitter.setOnClickListener {
+    shareText(
+            ShareConstants.TWITTER,
+            "This manager is as steady as an old dog!"
+    )
+}
 
-        btn_share_bitmap_by_twitter.setOnClickListener {
-            shareImage(
-                ShareConstants.TWITTER,
-                BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher),
-                "#ShareManager"
-            )
-        }
+btn_share_local_image_by_twitter.setOnClickListener {
+    shareImage(
+            ShareConstants.TWITTER,
+            localImageUri,
+            "#ShareManager"
+    )
+}
 
-        btn_share_local_image_by_twitter.setOnClickListener {
-            if (!checkLocalImageUri()) return@setOnClickListener
-            shareImage(
-                ShareConstants.TWITTER,
-                localImageUri,
-                "#ShareManager"
-            )
-        }
+btn_send_text_email.setOnClickListener {
+    sendEmail(
+            "This manager is as steady as an old dog!",
+            "ShareManager"
+    )
+}
 
-        btn_send_text_email.setOnClickListener {
-            sendEmail(
-                "This manager is as steady as an old dog!",
-                "ShareManager"
-            )
-        }
+btn_send_image_email.setOnClickListener {
+    sendImageEmail(
+            localImageUri,
+            "This manager is as steady as an old dog!",
+            "ShareManager"
+    )
+}
 
-        btn_send_image_email.setOnClickListener {
-            if (!checkLocalImageUri()) return@setOnClickListener
-            sendImageEmail(
-                localImageUri,
-                "This manager is as steady as an old dog!",
-                "ShareManager"
-            )
-        }
+btn_send_video_email.setOnClickListener {
+    sendVideoEmail(
+            localVideoUri,
+            "This manager is as steady as an old dog!",
+            "ShareManager"
+    )
+}
 
-        btn_send_video_email.setOnClickListener {
-            if (!checkLocalVideoUri()) return@setOnClickListener
-            sendVideoEmail(
-                localVideoUri,
-                "This manager is as steady as an old dog!",
-                "ShareManager"
-            )
-        }
-
-        btn_send_media_email.setOnClickListener {
-            sendMediaEmail(
-                listOf(
+btn_send_media_email.setOnClickListener {
+    sendMediaEmail(
+            listOf(
                     BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher),
                     BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher_round),
                     BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
-                ),
-                listOf(localVideoUri),
-                "This manager is as steady as an old dog!",
-                "ShareManager"
-            )
-        }
+            ),
+            listOf(localVideoUri),
+            "This manager is as steady as an old dog!",
+            "ShareManager"
+    )
+}
 
-        btn_send_sms.setOnClickListener {
-            sendSMS(
-                "This manager is as steady as an old dog!",
-                "10086"
-            )
-        }
-    }
-
-    private fun checkLocalVideoUri(): Boolean {
-        if (localVideoUri == Uri.EMPTY) {
-            val noVideoHint = "please click \"Choose Local Video\" button to select a local video first"
-            tv_local_video_uri.text = noVideoHint
-            Toast.makeText(this,noVideoHint,Toast.LENGTH_SHORT).show()
-            return false
-        }
-        return true
-    }
-
-    private fun checkLocalImageUri(): Boolean {
-        if (localImageUri == Uri.EMPTY) {
-            val noImageHint = "please click \"Choose Local Image\" button to select a local image first"
-            tv_local_image_uri.text = noImageHint
-            Toast.makeText(this,noImageHint,Toast.LENGTH_SHORT).show()
-            return false
-        }
-        return true
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_CHOOSE_LOCAL_VIDEO && resultCode == Activity.RESULT_OK && data != null) {
-            localVideoUri = data.data
-            tv_local_video_uri.text = "Local video uri: $localVideoUri"
-        }
-        if (requestCode == REQUEST_CODE_CHOOSE_LOCAL_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
-            localImageUri = data.data
-            tv_local_image_uri.text = "Local image uri: $localImageUri"
-        }
-    }
-
-    override fun onShareSuccess(type: String) {
-        val loginResult = "${SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date())}: $type 分享成功\n\n"
-        tv_share_status.append(loginResult)
-        Toast.makeText(this,loginResult,Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onShareFail(type: String, cause: String) {
-        val loginResult = "${SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date())}: $type 分享失败\ncause:$cause\n\n"
-        tv_share_status.append(loginResult)
-        Toast.makeText(this,loginResult,Toast.LENGTH_SHORT).show()
-    }
-
+btn_send_sms.setOnClickListener {
+    sendSMS(
+            "This manager is as steady as an old dog!",
+            "10086"
+    )
 }
 ```
 
@@ -239,11 +149,7 @@ class ShareActivity : BaseShareActivity() {
 
 Before that, you need some prepare work.
 
-Step 1. Share by Twitter can only be used after the user logs in by Twitter. So firstly make sure the user is logged in by Twitter if you want to use it.
-I recommend you use my [LoginManager](https://github.com/wkxjc/LoginManager) library. It's as convenient as this ShareManager.If you don't need Twitter
-share function, ignore it.
-
-Step 2. If you want to add share by Facebook. add this code in your AndroidManifest:
+Step 1. If you want to add share by Facebook. add this code in your AndroidManifest:
 ```
 <provider
     android:name="com.facebook.FacebookContentProvider"
@@ -252,6 +158,12 @@ Step 2. If you want to add share by Facebook. add this code in your AndroidManif
 ```
 
 Replace "YOUR_FACEBOOK_APP_ID" in provider with your app's facebook_app_id.
+
+Step 2. Share by Twitter can only be used after the user logs in by Twitter. So firstly make sure the user is logged in by Twitter if you want to use it.
+I recommend you use my [LoginManager](https://github.com/wkxjc/LoginManager) library. It's as convenient as this ShareManager.If you don't need Twitter
+share function, ignore it.
+
+Step 3. Share local image by Twitter need READ_EXTERNAL_STORAGE permission, make sure you've got it before use this function.
 
 ## How to get facebook_app_id?
 
