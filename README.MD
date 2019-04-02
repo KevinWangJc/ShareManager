@@ -30,6 +30,8 @@ dependencies {
         implementation 'com.github.wkxjc:ShareManager:1.0.3'
         // make sure you have added support-design library, you can use your own version
         implementation 'com.android.support:design:28.0.0'
+        // make sure you have added rxjava2 library, you can use your own version
+        implementation 'io.reactivex.rxjava2:rxjava:2.2.7'
 }
 ```
 
